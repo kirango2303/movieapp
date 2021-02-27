@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AuthProvider } from './contexts/AuthContext';
-import {Container} from 'react-bootstrap'
+// import {Container} from 'react-bootstrap'
 import Signup from './components/auth/Signup/Signup';
 import Login from './components/auth/Login/Login';
 import PrivateRoute from './components/auth/PrivateRoute';

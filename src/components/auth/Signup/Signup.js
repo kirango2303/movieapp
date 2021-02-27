@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {Card, Form, Button, Alert} from 'react-bootstrap'
+import { Form, Button} from 'react-bootstrap'
 import { useAuth } from '../../../contexts/AuthContext';
 import {Link, useHistory} from "react-router-dom";
 import '../Style.css'
@@ -8,7 +8,6 @@ import '../Style.css'
 const Signup = () => {
   const emailRef = useRef()
   const passwordRef = useRef()
-  const passwordConfirmRef = useRef()
   const firstNameRef = useRef()
   const {signup, currentUser} = useAuth()
   const [error, setError] = useState("")
@@ -28,12 +27,13 @@ const Signup = () => {
       setLoading(true)
       const result = await signup(emailRef.current.value, passwordRef.current.value)
       const verified = await result.user.sendEmailVerification()
+      console.log(verified)
       history.push("/login")
     }
     catch{
       setError("Failed to create an account. Password must be at least 6 characters or username already existed")
     }
-    // console.log(currentUser)
+    console.log(currentUser)
     setLoading(false)
   }
   return (

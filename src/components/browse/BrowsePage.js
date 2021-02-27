@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 const BrowsePage = () => {
+    const [data, setData] = useState([])
     return (
         <div>
             This is browse page (after login)

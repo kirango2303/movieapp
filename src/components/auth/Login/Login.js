@@ -1,9 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Card, Form, Button, Alert } from 'react-bootstrap';
+import React, { useRef, useState} from 'react';
+import { Form, Button } from 'react-bootstrap';
 import { useAuth } from '../../../contexts/AuthContext';
 import { Link, useHistory } from "react-router-dom";
 import '../Style.css'
-import Header from '../../header/Header';
+// import Header from '../../header/Header';
 
 const Login = () => {
   const emailRef = useRef()
@@ -11,7 +11,7 @@ const Login = () => {
   const { login, currentUser } = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const [verified, setVerified] = useState(false)
+  // const [verified, setVerified] = useState(false)
   const history = useHistory()
 
   async function handleSubmit(e) {
@@ -29,6 +29,7 @@ const Login = () => {
       setError("Failed to login. Please check your password or username and try again")
     }
     setLoading(false)
+    console.log(currentUser)
   }
 
   return (
