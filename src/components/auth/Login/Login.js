@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useAuth } from '../../../contexts/AuthContext';
 import { Link, useHistory } from "react-router-dom";
 import '../Style.css'
-// import Header from '../../header/Header';
+import Header from '../../header/Header';
 
 const Login = () => {
   const emailRef = useRef()
@@ -20,9 +20,23 @@ const Login = () => {
     try {
       setError("")
       setLoading(true)
-      await login(emailRef.current.value, passwordRef.current.value)
-      emailRef.current.value = "";
-      passwordRef.current.value = "";
+      try {
+        setError("")
+        setLoading(true)
+        await login(emailRef.current.value, passwordRef.current.value)
+        .then((data) => {
+          const name = data.user.displayName;
+          const loggedInUser = {
+              name,
+              uid: data.user.uid,
+              email: data.user.email
+          }
+          emailRef.current.value = "";
+          passwordRef.current.value = "";
+          localStorage.setItem('user', JSON.stringify(loggedInUser));
+        })
+  
+      
       history.push("/browse")
     }
     catch {
@@ -31,14 +45,19 @@ const Login = () => {
     setLoading(false)
     console.log(currentUser)
   }
+      catch {
+        setError("Failed to login. Please check your password or username and try again")
+      }
+      setLoading(false)
+    }
 
   return (
-    <>
+    <div >
     
     <div className="bgImage"></div>
-        {/* <Header /> */}
+        <Header />
     <div className="wrap "> 
-    
+
           <div className="title">Sign in</div> 
           {error && <div className="error">{error}</div>}
 
@@ -61,7 +80,7 @@ const Login = () => {
           </div>
           <div className="capcha">This page is protected by Google reCAPTCHA to ensure you are not a bot. </div>
     </div>
-   </>
+   </div>
   );
 }
 

@@ -1,0 +1,27 @@
+.header{
+    position: fixed;
+    top:0; 
+    width: 150%;
+    padding:20px;
+    height: 45px;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .logo{
+     position: fixed;
+     left: 20px;
+     width: 120px;
+     object-fit: contain;
+  }
+
+  .buttons {
+    background-color: #e50914;
+    padding: 7px 17px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    border-radius: 3px;
+  }
+  

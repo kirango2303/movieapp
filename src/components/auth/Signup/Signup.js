@@ -3,6 +3,9 @@ import { Form, Button} from 'react-bootstrap'
 import { useAuth } from '../../../contexts/AuthContext';
 import {Link, useHistory} from "react-router-dom";
 import '../Style.css'
+import Header from '../../header/Header';
+import {db} from '../../../services/firebase'
+
 
 
 const Signup = () => {
@@ -16,19 +19,30 @@ const Signup = () => {
 
   async function handleSubmit(e){
     e.preventDefault()
-
-    // if(passwordRef.current.value !== passwordConfirmRef.current.value){
-    //   return setError("Passwords do not match")
-    //   //set the error only 1 time
-    // }
-
     try{
       setError("")
       setLoading(true)
-      const result = await signup(emailRef.current.value, passwordRef.current.value)
+      let result = await signup(emailRef.current.value, passwordRef.current.value)
+        await result.user.updateProfile({
+        displayName: firstNameRef.current.value 
+      })
       const verified = await result.user.sendEmailVerification()
       console.log(verified)
-      history.push("/login")
+      await db.collection("users").add({
+        email: emailRef.current.value,
+        name: firstNameRef.current.value,
+        uid: result.user.uid,
+        bookmarked: [],
+      })
+      const loggedInUser = {
+        name: firstNameRef.current.value,
+        uid: result.user.uid,
+        email: result.user.email
+        
+      }
+      await localStorage.setItem("user", JSON.stringify(loggedInUser))
+      // console.log("log in successfully")
+      history.push("/browse")
     }
     catch{
       setError("Failed to create an account. Password must be at least 6 characters or username already existed")
@@ -39,6 +53,7 @@ const Signup = () => {
   return (
       <>
       <div className="bgImage"></div>
+      <Header />
     <div className="wrap">
         <div className="title">Sign Up</div>
         {error && <div className="error">{error}</div>}
