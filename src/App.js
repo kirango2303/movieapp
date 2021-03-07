@@ -7,6 +7,7 @@ import PrivateRoute from './components/auth/PrivateRoute';
 import HomePage from './components/home/HomePage';
 import { Route, Switch } from 'react-router-dom';
 import BrowsePage from './components/browse/BrowsePage';
+import Bookmark from './components/Bookmark/Bookmark';
 const App = () => {
   return (
     <div 
@@ -16,10 +17,11 @@ const App = () => {
       <div className="w-100">
         <AuthProvider>
           <Switch>
-            <Route exact path = "/" component={HomePage}/>
-            <Route path = "/browse" component={BrowsePage}/>
+            <PrivateRoute exact path = "/" component={HomePage}/>
+            <PrivateRoute path = "/browse" component={BrowsePage}/>
             <Route path="/signup" component={Signup}/>
             <Route path="/login" component={Login}/>
+            <PrivateRoute path="/mylist" component={Bookmark} />
           </Switch>
         </AuthProvider>
       </div>

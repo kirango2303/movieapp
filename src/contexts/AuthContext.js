@@ -37,6 +37,7 @@ export const AuthProvider = ({children}) =>{
 
     useEffect(() => {
         return auth.onAuthStateChanged(user => {
+            console.log(user)
             // khi nao thay change in authUser => notify us
             setCurrentUser(user)
             setLoading(false)

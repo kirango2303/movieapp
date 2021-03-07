@@ -11,7 +11,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
       render={props => {
         // if we have a current user then we will render out the component with all the props
         // private Route chính là checkAuth higher order component
-        return currentUser ? <Component {...props}/> : <Redirect to="/"/>
+        return currentUser ? <Component {...props}/> : <Redirect to="/login"/>
       }}
     >
     </Route>
