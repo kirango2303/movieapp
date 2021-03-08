@@ -109,4 +109,33 @@
     -ms-filter: blur(2px);
     filter: blur(2px);
   }
+  .headerAuth{
+    position: fixed;
+    top:0; 
+    width: 10%;
+    padding:20px;
+    height: 45px;
+    z-index: 1;
+    /* display: flex;
+    justify-content: space-between; */
+  }
   
+  .logo{
+     /* position: fixed; */
+     left: 20px;
+     width: 120px;
+     object-fit: contain;
+  } 
+
+ 
+    *, *:before, *:after {
+      box-sizing: border-box;
+    }
+  
+    html, body {
+      height: 100%;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-size: 16px;
+  }

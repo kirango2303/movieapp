@@ -1,17 +1,82 @@
-.header{
-  position: fixed;
-  top:0; 
-  width: 150%;
-  padding:20px;
-  height: 45px;
-  z-index: 1;
-  /* display: flex;
-  justify-content: space-between; */
+.navContents{
+  display:flex;
+  justify-content: space-between;
 }
 
+
+nav{
+  position: fixed;
+  top: 0;
+  padding: 20px;
+  width: 100%;
+  height: 60px;
+  z-index: 1;
+  transition-timing-function: ease-in;
+  transition: all .5s;
+  background-color: black;
+}
+
+
 .logo{
-   /* position: fixed; */
+   position: fixed; 
    left: 20px;
-   width: 120px;
+   width: 150px;
    object-fit: contain;
+   padding: 12px;
+} 
+
+
+@import url(https://fonts.googleapis.com/css?family=Oswald:400);
+
+.navigation {
+  width: 100%;
+  background-color: black;
+}
+
+img {
+  width: 35px;
+  float: left;
+}
+
+.logout {
+  font-size: 1em;
+  font-family: "Oswald", sans-serif;
+  position: relative;
+  right: -18px;
+  bottom: -4px;
+  overflow: hidden;
+  letter-spacing: 3px;
+  opacity: 0;
+  transition: opacity 0.45s;
+  -webkit-transition: opacity 0.35s;
+}
+
+.button-logout {
+  position: fixed;
+  text-decoration: none;
+  float: right;
+  padding: 5px;
+  margin-top: 0;
+  color: white;
+  width: 70px;
+  background-color: black;
+  transition: width 0.35s;
+  -webkit-transition: width 0.35s;
+  overflow: hidden;
+}
+
+.button-logout:hover {
+  width: 150px;
+}
+
+.button-logout:hover .logout {
+  opacity: 0.9;
+}
+
+.button-logout {
+  text-decoration: none;
+}
+
+.navBar {
+  background-color:black
 }

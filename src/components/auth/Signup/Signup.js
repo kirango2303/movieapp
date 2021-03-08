@@ -1,10 +1,10 @@
-import React, {useRef, useState} from 'react';
-import { Form, Button} from 'react-bootstrap'
+import React, { useRef, useState } from 'react';
+import { Form, Button } from 'react-bootstrap'
 import { useAuth } from '../../../contexts/AuthContext';
-import {Link, useHistory} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import '../Style.css'
 import Header from '../../header/Header';
-import {db} from '../../../services/firebase'
+import { db } from '../../../services/firebase'
 
 
 
@@ -12,19 +12,19 @@ const Signup = () => {
   const emailRef = useRef()
   const passwordRef = useRef()
   const firstNameRef = useRef()
-  const {signup, currentUser} = useAuth()
+  const { signup, currentUser } = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
 
-  async function handleSubmit(e){
+  async function handleSubmit(e) {
     e.preventDefault()
-    try{
+    try {
       setError("")
       setLoading(true)
       let result = await signup(emailRef.current.value, passwordRef.current.value)
-        await result.user.updateProfile({
-        displayName: firstNameRef.current.value 
+      await result.user.updateProfile({
+        displayName: firstNameRef.current.value
       })
       const verified = await result.user.sendEmailVerification()
       console.log(verified)
@@ -38,23 +38,27 @@ const Signup = () => {
         name: firstNameRef.current.value,
         uid: result.user.uid,
         email: result.user.email
-        
+
       }
       await localStorage.setItem("user", JSON.stringify(loggedInUser))
       // console.log("log in successfully")
       history.push("/browse")
     }
-    catch{
+    catch {
       setError("Failed to create an account. Password must be at least 6 characters or username already existed")
     }
     console.log(currentUser)
     setLoading(false)
   }
   return (
-      <>
+    <>
       <div className="bgImage"></div>
-      <Header />
-    <div className="wrap">
+      <div className="headerAuth">
+        <img
+          className="logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/170px-Netflix_2015_logo.svg.png" alt="Netflix Logo" />
+      </div>
+      <div className="wrap">
         <div className="title">Sign Up</div>
         {error && <div className="error">{error}</div>}
 
@@ -79,7 +83,7 @@ const Signup = () => {
         <div className="text">
           Already an user? <Link className="link" to="/login">Sign in now.</Link>
         </div>
-    </div>
+      </div>
     </>
   );
 }

@@ -1,6 +1,6 @@
 .container{
     width: 400px;
-    height: 180px;
+    height: 150px;
     /* display: flex;
     flex-direction: column; */
     /* margin: 30px; */
@@ -24,7 +24,7 @@
 } 
 
     .img:hover{
-        transform: scale(1.08);
+        transform: scale(1.25);
     } 
 
  

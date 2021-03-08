@@ -1,9 +1,8 @@
-import React, { useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useAuth } from '../../../contexts/AuthContext';
 import { Link, useHistory } from "react-router-dom";
 import '../Style.css'
-import Header from '../../header/Header';
 
 const Login = () => {
   const emailRef = useRef()
@@ -24,63 +23,72 @@ const Login = () => {
         setError("")
         setLoading(true)
         await login(emailRef.current.value, passwordRef.current.value)
-        .then((data) => {
-          const name = data.user.displayName;
-          const loggedInUser = {
+          .then((data) => {
+            const name = data.user.displayName;
+            const loggedInUser = {
               name,
               uid: data.user.uid,
               email: data.user.email
-          }
-          emailRef.current.value = "";
-          passwordRef.current.value = "";
-          localStorage.setItem('user', JSON.stringify(loggedInUser));
-        })
-  
-      
-      history.push("/browse")
+            }
+            emailRef.current.value = "";
+            passwordRef.current.value = "";
+            localStorage.setItem('user', JSON.stringify(loggedInUser));
+          })
+
+
+        history.push("/browse")
+      }
+      catch {
+        setError("Failed to login. Please check your password or username and try again")
+      }
+      setLoading(false)
+      console.log(currentUser)
     }
     catch {
       setError("Failed to login. Please check your password or username and try again")
     }
     setLoading(false)
-    console.log(currentUser)
   }
-      catch {
-        setError("Failed to login. Please check your password or username and try again")
-      }
-      setLoading(false)
-    }
 
   return (
     <div >
-    
-    <div className="bgImage"></div>
-        <Header />
-    <div className="wrap "> 
 
-          <div className="title">Sign in</div> 
-          {error && <div className="error">{error}</div>}
+      <div className="bgImage"></div>
+      <div className="headerAuth">
+        <img
+          className="logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/170px-Netflix_2015_logo.svg.png" alt="Netflix Logo" />
+      </div>
 
-          <Form className="form" onSubmit={handleSubmit}>
-            <Form.Group id="email">
-              <Form.Control className ="input" type="email" placeholder="Email Address" ref={emailRef} required></Form.Control>
-            </Form.Group>
+      <div className="wrap ">
 
-            <Form.Group id="password">
-              <Form.Control className ="input" type="password" placeholder="Password" ref={passwordRef} required></Form.Control>
-            </Form.Group>
+        <div className="title">Sign in</div>
+        {error && <div className="error">{error}</div>}
 
-            <Button className="button" disabled={loading} type="submit">
-              Sign in
+        <Form className="form" onSubmit={handleSubmit}>
+          <Form.Group id="email">
+            <Form.Control className="input" type="email" placeholder="Email Address" ref={emailRef} required></Form.Control>
+          </Form.Group>
+
+          <Form.Group id="password">
+            <Form.Control className="input" type="password" placeholder="Password" ref={passwordRef} required></Form.Control>
+          </Form.Group>
+
+          <Button className="button" disabled={loading} type="submit">
+            Sign in
           </Button>
-          </Form>
+        </Form>
 
-          <div className="text">
-            New to Netflix? <Link className="link" to="/signup">Sign up now </Link>
-          </div>
-          <div className="capcha">This page is protected by Google reCAPTCHA to ensure you are not a bot. </div>
+        <div className="text">
+          New to Netflix? <Link className="link" to="/signup">Sign up now </Link>
+        </div>
+        <div className="capcha">This website is a Netflix Clone, coded by a foodaholic. If you love binging on culinary videos as much as I do, this website is for you! </div>
+
+        <div cclassName="capcha" style={{ color: "red" }}>
+          Product by <Link style={{ color: "red" }} to="https://github.com/kirango2303">Anh Ngo</Link>
+        </div>
+      </div>
     </div>
-   </div>
   );
 }
 
