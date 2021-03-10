@@ -6,7 +6,8 @@ const Banner = () => {
         <div className="banner">
             <video className="video"
             autoPlay
-            loop
+            // loop
+            // muted
             style = {{
                 width: "100%",
                 height: "600px",
@@ -18,7 +19,7 @@ const Banner = () => {
             </video>
             <div className="bannerContents" style={{zIndex: "1"}}>
         <h1 className="bannerTitle">
-          Gordon Ramsay Ultimate Cookery Course
+          GR's #1 SERIES
         </h1>
         <div className="bannerButtons">
           <button className="bannerButton">Play video</button>

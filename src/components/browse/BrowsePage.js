@@ -21,9 +21,18 @@ const BrowsePage = () => {
     const [bookmarkedByCurrentUser, setBookmarkedByCurrentUser] = useState()
     const [savedFilms, setSavedFilms] = useState([])
     const [bookmarkId, setBookmarkId] = useState([])
-    const [value, setValue] = useState()
+    const [value, setValue] = useState("")
     const history = useHistory()
     const [error, setError] = useState("")
+    const [idForBookmark, setIdForBookmark] = useState(true)
+
+    useEffect(() => { // co cai gi thay doi trong [] chay lai ham nay
+
+          db.collection("bookmarked").onSnapshot((snapShot) => {
+            setIdForBookmark(snapShot.docs.map((doc) => doc.id ))
+          })     
+      }, [])
+
     useEffect(() => {
         // get all movies data from Firebase
         db.collection("movies").onSnapshot((snapShot) =>{
@@ -72,6 +81,10 @@ const BrowsePage = () => {
         history.push("/mylist")
     }
 
+    
+
+  
+
     async function handleLogout(e) {
         setError('')
     
@@ -86,11 +99,12 @@ const BrowsePage = () => {
 
     return (
         <div style={{display:"flex", flexDirection:"column"}}>
+
             <div style ={{width: "100%", height:"70%", display:"flex", flexDirection:"row"}}>
                 <Header />
                 <Banner />   
-                {/* <input style ={{width: "80px", left: "30%", height:"30px", display:"flex", flexDirection:"row"}}type="text" placeholder="Search for task" value={value} 
-                onChange={(e) => setValue(e.target.value)} /> */}
+                <input style ={{position: "fixed", width: "150px", left: "30%", height:"30px", display:"flex", flexDirection:"row", zIndex:"999"}}type="text" placeholder="Search for task" value={value} 
+                onChange={(e) => setValue(e.target.value)} /> 
                           
             </div>
         
@@ -99,8 +113,7 @@ const BrowsePage = () => {
             <h2>My List </h2>
             <div style={{flexDirection: "row", display: "flex", justifyContent: "space-between"}}>
                 {savedFilms
-                //  .filter((film) => (film.title).toLowerCase()
-                // .includes(value.toLowerCase()))              
+                .filter((film) => film.title.trim().toLowerCase().includes(value.trim().toLowerCase()))              
                 .map((film) => {
                    return(
                     <FilmIntro
@@ -114,13 +127,20 @@ const BrowsePage = () => {
                         />
                     )  
                 })}
+                {/* {idForBookmark.map((id) => {
+                    return(
+                        <FilmIntro 
+                        onDeleteBookmark = {onDeleteBookmark}
+                        idForBookmark = {id.idForBookMark}
+                        />
+                    )
+                })} */}
             </div>
             </div>
             <h2>Gordon Ramsay Ultimate Cookery Course</h2>
             <div style={{flexDirection: "row", display: "flex", justifyContent: "space-between"}}>
             {category1
-            // .filter((film) => film.title.toLowerCase()
-            // .includes(value.toLowerCase()))  
+            .filter((film) => film.title.trim().toLowerCase().includes(value.trim().toLowerCase()))  
             .map((film) => {
                 return(
                 <FilmIntro
@@ -138,8 +158,7 @@ const BrowsePage = () => {
         <h2>Culinary Frank's Vietnamese Recipes</h2>
             <div style={{flexDirection: "row", display: "flex", justifyContent: "space-between"}}>
             {category5
-            // .filter((film) => film.title.toLowerCase()
-            // .includes(value.toLowerCase()))  
+            .filter((film) => film.title.trim().toLowerCase().includes(value.trim().toLowerCase()))  
             .map((film) => {
                 return(
                 <FilmIntro
@@ -157,8 +176,7 @@ const BrowsePage = () => {
         <h2>ChefSteps At Home</h2>
             <div style={{flexDirection: "row", display: "flex", justifyContent: "center"}}>
             {category2
-            // .filter((film) => film.title.toLowerCase()
-            // .includes(value.toLowerCase()))  
+            .filter((film) => film.title.trim().toLowerCase().includes(value.trim().toLowerCase()))  
             .map((film) => {
                 return(
                 <FilmIntro
@@ -176,8 +194,7 @@ const BrowsePage = () => {
         <h2>The Great Cheese Hunt</h2>
             <div style={{flexDirection: "row", display: "flex", justifyContent: "center"}}>
             {category3
-            // .filter((film) => film.title.toLowerCase()
-            // .includes({value}.toLowerCase()))  
+            .filter((film) => film.title.trim().toLowerCase().includes(value.trim().toLowerCase()))  
             .map((film) => {
                 return(
                 <FilmIntro
@@ -195,8 +212,7 @@ const BrowsePage = () => {
         <h2>Last Chance Kitchen Season 16</h2>
             <div style={{flexDirection: "row", display: "flex", justifyContent: "center"}}>
             {category4
-            // .filter((film) => film.title.toLowerCase()
-            // .includes({value}.toLowerCase()))  
+            .filter((film) => film.title.trim().toLowerCase().includes(value.trim().toLowerCase()))  
             .map((film) => {
                 return(
                 <FilmIntro
