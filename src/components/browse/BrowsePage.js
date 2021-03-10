@@ -96,7 +96,7 @@ const BrowsePage = () => {
             <div style ={{width: "100%", height:"70%", display:"flex", flexDirection:"row"}}>
                 <Header />
                 <Banner />
-                <div className="welcome" style ={{position: "fixed", marginLeft:"30%", display:"flex", flexDirection:"row"}}>Welcome, {currentUser.displayName}! </div>
+                <div className="welcome" style ={{position: "fixed", marginLeft:"30%", display:"flex", flexDirection:"row"}}>Welcome to Netflix Clone, {currentUser.displayName}! </div>
                 <div className="search">  
                 <input type="text" value={value} 
                 onChange={(e) => setValue(e.target.value)} /> 
@@ -105,8 +105,19 @@ const BrowsePage = () => {
 
             <div style ={{width: "100%", height: "30%"}}>
             
-            {savedFilms.length >= 1 && <div className="head"><b>My List </b></div>}
-            <div style={{flexDirection: "row", display: "flex", justifyContent: "space-between", marginBottom: "50px"}}>
+            {savedFilms.length >= 1 ? <div className="head"><b>My List </b></div> 
+            : <div className="welcome2">
+                <div>Hi {currentUser.displayName}! 
+                If this is you first time here, welcome to Netflix Clone. 
+                I hope that this site will bring you as much joy as it brought 
+                me coding the web. All the videos on this site belong to YouTube. 
+                I do not own any of these videos, and I would like to use this website
+                 as a platform to share with you my all-time favorites. 
+                 Whether it is midnight or early morning your time, have fun watching food! </div> 
+                 <div className="thankyou"> I could not have coded this without my instructor and also my best friend, Quang Nguyen. 
+                     Thank you for your guidance and support this whole time!</div>
+                 </div>}
+            <div style={{flexDirection: "row", display: "flex", justifyContent: "space-between", marginBottom: "20px"}}>
                 {savedFilms
                 .filter((film) => film.title.trim().toLowerCase().includes(value.trim().toLowerCase()))              
                 .map((film) => {

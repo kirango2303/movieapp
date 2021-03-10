@@ -6,13 +6,9 @@ import Comment from '../Comment/Comment';
 import { db } from "../../../services/firebase"
 import { useAuth } from '../../../contexts/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlayCircle, faCheckCircle, faPlusSquare} from '@fortawesome/free-solid-svg-icons'
+import { faPlayCircle, faCheckCircle, faPlusSquare, faTrashAlt, faBookmark, faCommentDots} from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
-
-library.add(
-    faPlayCircle, faCheckCircle, faPlusSquare
-);
 
 
 const FilmIntro = (props) => {
@@ -82,7 +78,7 @@ const FilmIntro = (props) => {
                 setBookmarkedId(foundBookmarkFilm.bookmarkId)
             }
         }
-    }, [bookmarkedMovies])
+    }, [bookmarkedMovies, open])
 
     console.log(bookmarkedId)
     return (
@@ -102,15 +98,17 @@ const FilmIntro = (props) => {
                 >
                     <div>
                         <img src={backdropPath} style={{ width: "100%", height: "auto", }} />
-                        <FontAwesomeIcon icon={['fas', 'faPlayCircle']} />
-                         <button type="button" onClick={() => setOpen1(true)}> Play </button>
+                        <div className="icon-group">
+                        <div className="icon"><FontAwesomeIcon style ={{fontSize: 35}} onClick={() => setOpen1(true)} icon={faPlayCircle} /></div>
                          {myList && myList.includes(id) ? (
-                            <button type="button" onClick={(e) => onDeleteBookmark(e, bookmarkedId)}> Remove </button>
+                            <div className="icon"><FontAwesomeIcon  style={{fontSize: 35}} onClick={(e) => onDeleteBookmark(e, bookmarkedId)} icon={faTrashAlt}/> </div> 
                          ):
                          (
-                            <button type="button" onClick={() => handleBookmark()}> Bookmark </button>
+                            <div className="icon"><FontAwesomeIcon style={{fontSize: 35}} onClick={() => handleBookmark()} icon={faBookmark} /> </div>
+
                          )}
-                        <button type="button" onClick={() => setOpen2(true)}> View all comments </button>
+                        <div className="icon"><FontAwesomeIcon style={{fontSize: 35}} onClick={() => setOpen2(true)} icon={faCommentDots} /> </div>
+                        </div>
                         <div className="title">
                            <b>{title}</b> 
                         </div>
@@ -145,7 +143,7 @@ const FilmIntro = (props) => {
                                         <div className="boxResult">
                                             <div className="resultComment">
                                             <div class="avatarComment" >
-								<img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar"/>
+								<img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png" alt="avatar"/>
 							</div>
                                                 <h4>{comment.name}</h4>
                                                 <p>{comment.comment}</p>
