@@ -5,7 +5,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Comment from '../Comment/Comment';
 import { db } from "../../../services/firebase"
 import { useAuth } from '../../../contexts/AuthContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlayCircle, faCheckCircle, faPlusSquare} from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
 
+
+library.add(
+    faPlayCircle, faCheckCircle, faPlusSquare
+);
 
 
 const FilmIntro = (props) => {
@@ -18,8 +25,8 @@ const FilmIntro = (props) => {
     const [comments, setComments] = useState([])
     const [invalidate, setInvalidate] = useState(true)
     const [bookmarkedMovies, setBookmarkedMovies] = useState([])
-    const [bookmarkedId, setBookmarkedId] = useState([])
-
+    const [bookmarkedId, setBookmarkedId] = useState({})
+    const [myList, setMyList] = useState([])
 
     useEffect(() => {
         if (invalidate) {
@@ -31,8 +38,10 @@ const FilmIntro = (props) => {
                 })
         }
         setInvalidate(false)
-    }, [invalidate]
-    )
+    }, [invalidate])
+
+
+
     const handleBookmark = () => {
         db.collection("bookmarked")
             .add({
@@ -46,20 +55,34 @@ const FilmIntro = (props) => {
         db.collection("bookmarked").doc(id).delete()
             .then(() => console.log("deleted"))
             .catch(err => console.log(err))
+        setOpen(false)
     }
 
-    // useEffect(() => {
-    //     // get all bookmarked movies data from Firebase
-    //     db.collection("bookmarked").onSnapshot((snapShot) =>{
-    //         setBookmarkedMovies(snapShot.docs.map((doc) => ({bookmarkId: doc.id, data:doc.data()})))
-    //     })
-    // }, [handleBookmark, onDeleteBookmark])
+    const closeModal = () => {
+        setOpen(false)
+        setComments([])
+    }
 
-    // useEffect(() => {
-    //     if (bookmarkedMovies) {
-    //         setBookmarkedId(bookmarkedMovies.find(movie => movie.data.movieId == id && currentUser.uid == movie.data.userId).bookmarkId)
-    //     }
-    // }, [bookmarkedMovies])
+    useEffect(() => {
+        // get all bookmarked movies data from Firebase
+        db.collection("bookmarked").onSnapshot((snapShot) =>{
+            setBookmarkedMovies(snapShot.docs.map((doc) => ({bookmarkId: doc.id, data:doc.data()})))
+            setMyList(snapShot.docs.map((doc) => {
+                if(currentUser.uid == doc.data().userId){
+                    return doc.data().movieId
+                }
+            }))
+        })
+    }, [])
+    
+    useEffect(() => {   
+        if (bookmarkedMovies) {
+            let foundBookmarkFilm = bookmarkedMovies.find((movie) => movie.data.movieId == id && currentUser.uid == movie.data.userId)
+            if(foundBookmarkFilm){
+                setBookmarkedId(foundBookmarkFilm.bookmarkId)
+            }
+        }
+    }, [bookmarkedMovies])
 
     console.log(bookmarkedId)
     return (
@@ -73,16 +96,20 @@ const FilmIntro = (props) => {
 
                 <Modal
                     open={open}
-                    onClose={() => setOpen(false)}
+                    onClose={closeModal}
                     className={classes.paper}
-                    // style={{'maxHeight': 'calc(100vh-100px)', 'overflowY': 'auto'}}
                     style={{ 'maxHeight': '1000px', 'overflowY': 'scroll', position: "absolute" }}
                 >
                     <div>
                         <img src={backdropPath} style={{ width: "100%", height: "auto", }} />
+                        <FontAwesomeIcon icon={['fas', 'faPlayCircle']} />
                          <button type="button" onClick={() => setOpen1(true)}> Play </button>
-                         <button type="button" onClick={() => handleBookmark()}> Bookmark </button>
-                         {/* <button type="button" onClick={(e) => onDeleteBookmark(e, bookmarkedId)}> Remove </button> */}
+                         {myList && myList.includes(id) ? (
+                            <button type="button" onClick={(e) => onDeleteBookmark(e, bookmarkedId)}> Remove </button>
+                         ):
+                         (
+                            <button type="button" onClick={() => handleBookmark()}> Bookmark </button>
+                         )}
                         <button type="button" onClick={() => setOpen2(true)}> View all comments </button>
                         <div className="title">
                            <b>{title}</b> 

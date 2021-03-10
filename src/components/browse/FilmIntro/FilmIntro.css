@@ -45,7 +45,7 @@
       .boxResult .resultComment h4{
         font-weight: 600;
         white-space: nowrap;
-        color: red;
+        color:red;
         cursor: pointer;
         text-decoration: none;
         font-size: 14px;
