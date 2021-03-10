@@ -48,18 +48,18 @@ const FilmIntro = (props) => {
             .catch(err => console.log(err))
     }
 
-    useEffect(() => {
-        // get all bookmarked movies data from Firebase
-        db.collection("bookmarked").onSnapshot((snapShot) =>{
-            setBookmarkedMovies(snapShot.docs.map((doc) => ({bookmarkId: doc.id, data:doc.data()})))
-        })
-    }, [handleBookmark, onDeleteBookmark])
+    // useEffect(() => {
+    //     // get all bookmarked movies data from Firebase
+    //     db.collection("bookmarked").onSnapshot((snapShot) =>{
+    //         setBookmarkedMovies(snapShot.docs.map((doc) => ({bookmarkId: doc.id, data:doc.data()})))
+    //     })
+    // }, [handleBookmark, onDeleteBookmark])
 
-    useEffect(() => {
-        if (bookmarkedMovies) {
-            setBookmarkedId(bookmarkedMovies.find(movie => movie.data.movieId == id && currentUser.uid == movie.data.userId).bookmarkId)
-        }
-    }, [bookmarkedMovies])
+    // useEffect(() => {
+    //     if (bookmarkedMovies) {
+    //         setBookmarkedId(bookmarkedMovies.find(movie => movie.data.movieId == id && currentUser.uid == movie.data.userId).bookmarkId)
+    //     }
+    // }, [bookmarkedMovies])
 
     console.log(bookmarkedId)
     return (
@@ -82,13 +82,13 @@ const FilmIntro = (props) => {
                         <img src={backdropPath} style={{ width: "100%", height: "auto", }} />
                          <button type="button" onClick={() => setOpen1(true)}> Play </button>
                          <button type="button" onClick={() => handleBookmark()}> Bookmark </button>
-                         <button type="button" onClick={(e) => onDeleteBookmark(e, bookmarkedId)}> Remove </button>
+                         {/* <button type="button" onClick={(e) => onDeleteBookmark(e, bookmarkedId)}> Remove </button> */}
                         <button type="button" onClick={() => setOpen2(true)}> View all comments </button>
-                        <div>
-                            {title}
+                        <div className="title">
+                           <b>{title}</b> 
                         </div>
-                        <div> {channel}</div>
-                        <div>{overview}</div>
+                        <div className="channel" > Channel: {channel}</div>
+                        <div className="overview">Overview: {overview}</div>
 
                         <div>
                             <Comment
@@ -113,7 +113,7 @@ const FilmIntro = (props) => {
                             className={classes.paper2}
                         >
                             <div>
-                                {comments ? comments.map((comment) => {
+                                {comments.length >=1 ? comments.map((comment) => {
                                     return (
                                         <div className="boxResult">
                                             <div className="resultComment">
@@ -126,7 +126,7 @@ const FilmIntro = (props) => {
                                           
                                             </div>
                                     )
-                                }): <div>No comment yet</div>}
+                                }): <div className="channel" style={{marginTop: "50px"}}>There is no comment on this video. Share what you think by adding a comment!</div>}
                                 
                                   <div> <Comment id={id}/></div>
                             </div>

@@ -109,8 +109,7 @@ const BrowsePage = () => {
             </div>
         
             <div style ={{width: "100%", height: "30%"}}>
-            <div>
-            <h2>My List </h2>
+            {savedFilms.length >= 1 && <div className="head">My List </div>}
             <div style={{flexDirection: "row", display: "flex", justifyContent: "space-between"}}>
                 {savedFilms
                 .filter((film) => film.title.trim().toLowerCase().includes(value.trim().toLowerCase()))              
@@ -127,18 +126,11 @@ const BrowsePage = () => {
                         />
                     )  
                 })}
-                {/* {idForBookmark.map((id) => {
-                    return(
-                        <FilmIntro 
-                        onDeleteBookmark = {onDeleteBookmark}
-                        idForBookmark = {id.idForBookMark}
-                        />
-                    )
-                })} */}
+            
             </div>
-            </div>
-            <h2>Gordon Ramsay Ultimate Cookery Course</h2>
-            <div style={{flexDirection: "row", display: "flex", justifyContent: "space-between"}}>
+            <div>
+            <div className="head">Gordon Ramsay Ultimate Cookery Course</div>
+            <div style={{flexDirection: "row", display: "flex", justifyContent: "space-between", height: "200px"}}>
             {category1
             .filter((film) => film.title.trim().toLowerCase().includes(value.trim().toLowerCase()))  
             .map((film) => {
@@ -155,7 +147,8 @@ const BrowsePage = () => {
                 )
             })}
         </div>
-        <h2>Culinary Frank's Vietnamese Recipes</h2>
+        </div>
+        <div className="head">Culinary Frank's Vietnamese Recipes</div>
             <div style={{flexDirection: "row", display: "flex", justifyContent: "space-between"}}>
             {category5
             .filter((film) => film.title.trim().toLowerCase().includes(value.trim().toLowerCase()))  
@@ -173,7 +166,7 @@ const BrowsePage = () => {
                 )
             })}
         </div>
-        <h2>ChefSteps At Home</h2>
+        <div className="head">ChefSteps At Home</div>
             <div style={{flexDirection: "row", display: "flex", justifyContent: "center"}}>
             {category2
             .filter((film) => film.title.trim().toLowerCase().includes(value.trim().toLowerCase()))  
@@ -191,7 +184,7 @@ const BrowsePage = () => {
                 )
             })}
         </div>
-        <h2>The Great Cheese Hunt</h2>
+        <div className="head">The Great Cheese Hunt</div>
             <div style={{flexDirection: "row", display: "flex", justifyContent: "center"}}>
             {category3
             .filter((film) => film.title.trim().toLowerCase().includes(value.trim().toLowerCase()))  
@@ -209,7 +202,7 @@ const BrowsePage = () => {
                 )
             })}
         </div>
-        <h2>Last Chance Kitchen Season 16</h2>
+        <div className="head">Last Chance Kitchen Season 16</div>
             <div style={{flexDirection: "row", display: "flex", justifyContent: "center"}}>
             {category4
             .filter((film) => film.title.trim().toLowerCase().includes(value.trim().toLowerCase()))  
@@ -227,6 +220,7 @@ const BrowsePage = () => {
                 )
             })}
         </div>
+       
         </div>
         </div>
     )
