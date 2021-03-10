@@ -39,7 +39,7 @@ const Comment = (props) => {
     <div>
 
 
-      <div className="container">
+      <div className="containers">
         <Form className="form-group" style ={{height: "80%"}} onSubmit={(e) => addComment(e)}>
           <Form.Control className="inputComment" type="text" ref={commentRef} placeholder="Enter your comment here..." />
           <Button className="buttonComment" type="submit" > Add Comment</Button>
